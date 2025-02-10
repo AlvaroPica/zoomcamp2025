@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "zoomcamp2025"
+version = "0.1.0"
+description = "Python package for data engineering zoomcamp"
+authors = ["Alvaro Picatoste <apicatoste@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.13.*"
+pgcli = "*"
+psycopg2-binary = "*"
+sqlalchemy = "*"    
+pandas = "*"
+plotly = "*"
+jupyter = "*"
+python-dotenv = "^1.0.0"
+ipykernel = "^6.29.5"
+pyperclip = "^1.9.0"
+tabulate = "^0.9.0"
+dbt-postgres = "^1.9.0"
+streamlit = "^1.41.1"
+dlt= {extras = ["duckdb"], version = "^1.6.1"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
