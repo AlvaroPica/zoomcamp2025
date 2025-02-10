@@ -1,41 +1,41 @@
-Notes for Setting up the environment
+# Notes for Setting up the environment
+
+## Intro
+
+This notes are taken from video  [DE Zoomcamp 1.4.1 - Setting up the Environment on Google Cloud (Cloud VM + SSH access)](https://www.youtube.com/watch?v=ae-CV2KfoN0&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=15)
+
+### Steps
 
 #### Create SSH key to connect to VM in the cloud
 
-Check [Createh SSH Key](https://cloud.google.com/compute/docs/connect/create-ssh-keys)
+Check [Create SSH Key](https://cloud.google.com/compute/docs/connect/create-ssh-keys)
 
-In Git Bash we run:
+In Git Bash we run 
 
 `ssh-keygen -t rsa -f ~/.ssh/gcp -C pica_gcp`
 
-Where *pica_gcp* is the user of the VM machine will connect to.
+Where **pica_gcp** is the user I will use to connect to the VM machine.
 
-Put public key to GCP in:
+Add public key to GCP Console in `compute_engine > metadata > ssh keys`
 
-`compute_engine > metadata > ssh keys`
-
-All the VM within the GCP project will have the same keys.
+**Important**: All the VM within the GCP project will have the same keys.
 
 #### Create VM
 
-- Name: de-zoomcamp
-- Region: europe-southwest1 (Madrid)
-- General purpose
-- VM Type: E2 e2-standard-4 (USD 116.65 per month)
-- OS and Boot disk: Ubuntu 20.04 LTS, 30Gb
-
+- **Name**: de-zoomcamp
+- **Region**: europe-southwest1 (Madrid)
+- **VM Type**: E2 e2-standard-4 (USD 116.65 per month)
+- **OS and Boot disk**: Ubuntu 20.04 LTS, 30Gb
 
 #### Connect to VM
 
-From home directory:
+From git bash home directory run:
 
 `ssh -i ~/.ssh/gcp pica_gcp@34.175.59.212`
 
-Make sure you are using the correct user you pu in the key when generated.
+Make sure you are using the correct user you put in the key when generated.
 
 #### Configure instance
-
-In the video Anaconda is installed (for Linux)
 
 Create config file in your computer. Configure access to the server (VM)
 
@@ -88,9 +88,7 @@ Install dependencies:
 ##### Package management
 
 In the Data engineeroing Zoomcamp it is recommended to manage dependencies with Anaconda.
-
 Here we will try to go on with Poetry
-
 The Ubuntu VM should have python 3.7 or higher. Validate by:
 
 `python3 --version`
