@@ -4,7 +4,9 @@
 
 Data is coming from [Taxi Data in Github](https://github.com/DataTalksClub/nyc-tlc-data/releases)
 
-Once you have run `docker compose up -d` verify everthing is fine:
+Once you have run `docker compose up -d` in corresponding folder you can verify everthing is fine:
+
+In case docker-compose file was moved from one location to another you will need to map volumes to be able to access former flows or KV values stored in previous interactions with the container.
 
 1) Check Kestra container can see Posgres:
 
