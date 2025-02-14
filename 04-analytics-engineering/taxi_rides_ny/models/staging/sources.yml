@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: staging
+    database: angular-rhythm-450212-n4
+    schema: zoomcamp_dbt
+
+    tables:
+      - name: green_tripdata
+      - name: yellow_tripdata
