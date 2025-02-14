@@ -1,1 +1,1 @@
-select "test"
+select "test" as test_ci
