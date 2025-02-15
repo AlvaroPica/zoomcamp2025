@@ -88,9 +88,13 @@ jobs:
         working-directory: 04-analytics-engineering/taxi_rides_ny
         run: dbt deps --profiles-dir ~/.dbt
 
-      - name: Run dbt compile
+      - name: Run dbt seed
         working-directory: 04-analytics-engineering/taxi_rides_ny
-        run: dbt compile --profiles-dir ~/.dbt
+        run: dbt seed --profiles-dir ~/.dbt
+
+      - name: Run dbt run
+        working-directory: 04-analytics-engineering/taxi_rides_ny
+        run: dbt run --profiles-dir ~/.dbt
 
       - name: Run dbt test
         working-directory: 04-analytics-engineering/taxi_rides_ny
