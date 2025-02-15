@@ -6,6 +6,8 @@ WITH source_data AS (
     SELECT 3 as id, 'C' as letter
     UNION ALL
     SELECT 4 as id, 'D' as letter
+    UNION ALL
+    SELECT 5 as id, 'E' as letter
 )
 
 SELECT 
