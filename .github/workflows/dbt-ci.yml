@@ -35,11 +35,27 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install dbt-bigquery
+          pip install google-cloud-bigquery
 
       - name: Setup GCP Auth
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Create BigQuery Dataset
+        run: |
+          python -c '
+          from google.cloud import bigquery
+          client = bigquery.Client()
+          dataset_id = "${{ secrets.GCP_PROJECT_ID }}.zoomcamp_dbt_core_ci"
+          dataset = bigquery.Dataset(dataset_id)
+          dataset.location = "europe-west2"
+          try:
+              dataset = client.create_dataset(dataset, exists_ok=True)
+              print(f"Dataset {dataset_id} created or already exists.")
+          except Exception as e:
+              print(f"Error creating dataset: {e}")
+          '
 
       - name: Create profiles.yml
         run: |
