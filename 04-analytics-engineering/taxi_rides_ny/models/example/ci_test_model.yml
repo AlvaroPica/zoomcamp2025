@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: ci_test_model
+    description: "A simple model to test CI pipeline"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+      - name: letter
+        description: "A sample letter"
+        tests:
+          - not_null
+      - name: upper_letter
+        description: "Uppercase version of letter"
+        tests:
+          - not_null 
