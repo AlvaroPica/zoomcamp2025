@@ -16,6 +16,10 @@ jobs:
     name: dbt CI Checks
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      id-token: write 
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
