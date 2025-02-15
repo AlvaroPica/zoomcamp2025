@@ -59,14 +59,19 @@ jobs:
                 priority: interactive
           EOF
 
+      - name: Debug directory
+        run: |
+          pwd
+          ls -la
+
       - name: Run dbt deps
-        working-directory: ./zoomcamp2025/04-analytics-engineering/taxi_rides_ny
+        working-directory: 04-analytics-engineering/taxi_rides_ny
         run: dbt deps
 
       - name: Run dbt compile
-        working-directory: ./zoomcamp2025/04-analytics-engineering/taxi_rides_ny
+        working-directory: 04-analytics-engineering/taxi_rides_ny
         run: dbt compile
 
       - name: Run dbt test
-        working-directory: ./zoomcamp2025/04-analytics-engineering/taxi_rides_ny
-        run: dbt test 
+        working-directory: 04-analytics-engineering/taxi_rides_ny
+        run: dbt test
