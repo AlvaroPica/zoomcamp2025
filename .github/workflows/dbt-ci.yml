@@ -1,15 +1,17 @@
 name: DBT CI
 
 on:
+  # Trigger on pull requests
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [ "main", "master" ]
+  # Enable manual triggers
+  workflow_dispatch:
+  # Add push trigger for testing
+  push:
+    branches: [ "main", "master" ]
     paths:
-      - 'models/**'
-      - 'tests/**'
-      - 'macros/**'
-      - 'dbt_project.yml'
+      - '**/*.sql'
+      - '**/*.yml'
 
 jobs:
   dbt-test:
@@ -18,7 +20,7 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write 
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -58,10 +60,13 @@ jobs:
           EOF
 
       - name: Run dbt deps
+        working-directory: ./zoomcamp2025/04-analytics-engineering/taxi_rides_ny
         run: dbt deps
 
       - name: Run dbt compile
+        working-directory: ./zoomcamp2025/04-analytics-engineering/taxi_rides_ny
         run: dbt compile
 
       - name: Run dbt test
+        working-directory: ./zoomcamp2025/04-analytics-engineering/taxi_rides_ny
         run: dbt test 
