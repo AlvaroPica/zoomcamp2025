@@ -4,6 +4,8 @@ WITH source_data AS (
     SELECT 2 as id, 'B' as letter
     UNION ALL
     SELECT 3 as id, 'C' as letter
+    UNION ALL
+    SELECT 4 as id, 'D' as letter
 )
 
 SELECT 
