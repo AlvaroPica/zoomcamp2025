@@ -1,0 +1,23 @@
+default:
+  target: dev ##By default, dbt will use the dev profile. Execute dbt run --target=prod to use the prod profile.
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: angular-rhythm-450212-n4  # Your GCP project ID
+      dataset: zoomcamp_dbt_core             # Your BigQuery dataset
+      threads: 4
+      timeout_seconds: 300
+      location: 'europe-west2'  # Your dataset's location
+      priority: interactive
+      keyfile: 'C:\workspace\creds\de-dbt-cloud.json'
+    prod:
+      type: bigquery
+      method: service-account
+      project: angular-rhythm-450212-n4
+      dataset: zoomcamp_dbt_core_prod
+      threads: 4
+      timeout_seconds: 300
+      location: 'europe-west2'
+      priority: interactive
+      keyfile: 'C:\workspace\creds\de-dbt-cloud.json'
