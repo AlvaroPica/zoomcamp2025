@@ -59,19 +59,23 @@ jobs:
                 priority: interactive
           EOF
 
-      - name: Debug directory
+      - name: Debug profiles
         run: |
-          pwd
+          echo "Content of ~/.dbt/profiles.yml:"
+          cat ~/.dbt/profiles.yml
+          echo "Files in current directory:"
           ls -la
+          echo "Files in dbt project directory:"
+          ls -la 04-analytics-engineering/taxi_rides_ny/
 
       - name: Run dbt deps
         working-directory: 04-analytics-engineering/taxi_rides_ny
-        run: dbt deps
+        run: dbt deps --profiles-dir ~/.dbt
 
       - name: Run dbt compile
         working-directory: 04-analytics-engineering/taxi_rides_ny
-        run: dbt compile
+        run: dbt compile --profiles-dir ~/.dbt
 
       - name: Run dbt test
         working-directory: 04-analytics-engineering/taxi_rides_ny
-        run: dbt test
+        run: dbt test --profiles-dir ~/.dbt
