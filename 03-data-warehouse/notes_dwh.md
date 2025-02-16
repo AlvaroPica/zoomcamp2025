@@ -1,11 +1,13 @@
 # Module 3: Data warehouse
 
-OLAP vs OLTP
-What is a data warehouse
-BigQuery
-- Cost
-- Partitions and Clustering
-- Best Practices
+Index:
+
+- OLAP vs OLTP
+- What is a data warehouse
+- BigQuery
+  - Cost
+  - Partitions and Clustering
+  - Best Practices
 - Internals
 - ML in BQ
 
@@ -27,7 +29,7 @@ OLAP: Online analytical processing
 
 ## What is a Data warehouse (DWH)
 
-<img src="dwh_schema.png" alt="Description of the image" width="400">
+![Description of the image](../assets/dwh_schema.png){: width="400"}
 
 ### Big Query
 
@@ -38,7 +40,7 @@ OLAP: Online analytical processing
 
 Considerations:
 
-- BigQuery generally cashses data. Within a query > More > Cache. 
+- BigQuery generally cashses data. Within a query > More > Cache.
 - Provides Open Source public data. E.g. bigquery-public-data > citibike_stations
 
 #### Big query costs
@@ -51,7 +53,7 @@ Considerations:
 BigQuery gives an aproximate estimation of data to be processed when run a query at the top right of the SQL editor.
 The real estimatioon after execution is given in the results area.
 
-#### External tables 
+#### External tables
 
 BigQuery allows to create external table from different sources
 
@@ -89,11 +91,12 @@ In this case table size and number of rows will be known by BigQuery.
 Assuming data will be queried depending on a field, typically a date for example, partition improves efficiency.
 
 **Partition**:
-<img src="bq_partitions.png" alt="Description of the image" width="600">
+
+![Description of the image](../assets/bq_partitions.png){: width="600"}
 
 **Clustering**:
-<img src="bq_clustering.png" alt="Description of the image" width="600">
 
+![Description of the image](../assets/bq_clustering.png){: width="600"}
 
 In BigQuery you can choose:
 
@@ -110,7 +113,7 @@ In BigQuery you can choose:
   - aggregate queries
 - Table with data size < 1GB do not show significant improvement with partitioning and clustering
 - You can specify up to four clustering columns
-- Clustering columns must be top-level, non-repeated columns: DATE, BOOL, GEOGRAPHY, INT64, 
+- Clustering columns must be top-level, non-repeated columns: DATE, BOOL, GEOGRAPHY, INT64
 
 Once BQ understand that only data for specific value of that partition is required it will not process or read data related to non-interested values of that partitioned field.
 
@@ -121,7 +124,7 @@ Let's say we partition by date and we ask for a specific date, BQ will ignore da
 | Cost benefit unknown | Cost known upfront  (You can set rules like if the cost of this query exceeds X$ amount, do not execute) |
 | You need more granularity than partitioning alone allows |You need partition-level management|
 | Your queries commonly use filters or aggregation against multiple particular columns | Filter or aggregate on single column |
-| The cardinality of the number of values in a column or group of columns is large |
+| The cardinality of the number of values in a column or group of columns is large | |
 
 ##### Clustering over partitioning
 
@@ -143,7 +146,6 @@ To maintain the performance characteristics of a clustered table:
 - BigQuery performs automatic re-clustering in the background to restore the sort proprety of the table.
 - For partitioned tables, clustering is maintenaed for data within the scope of each partition.
 
-
 #### Examples
 
 ```bash
@@ -153,6 +155,7 @@ PARTITION BY
     DATE(tpep_pickup_datetime) AS
 select * from taxi-rides-ny.nytaxi.external_yellow_tripdata
 ```
+
 Icon in the tables within a BigQuery dataset will be different.
 It is possible to check how many rows are within each partition with:
 
@@ -207,16 +210,15 @@ columnar-oriented data: helps with aggregations
 
 BQ Architecture:
 
-<img src="bq_architecture.png" alt="Description of the image" width="600">
+![Description of the image](../assets/bq_architecture.png){: width="600"}
 
 Column vs record data:
 
-<img src="column_record_oriented.png" alt="Description of the image" width="600">
-
+![Description of the image](../assets/column_record_oriented.png){: width="600"}
 
 ## Links
 
-https://cloud.google.com/bigquery/docs/introduction
-https://research.google/pubs/dremel-interactive-analysis-of-web-scale-datasets-2/
-https://panoply.io/data-warehouse-guide/bigquery-architecture/
-https://docs.google.com/presentation/d/1a3ZoBAXFk8-EhUsd7rAZd-5p_HpltkzSeujjRGB2TAI/edit#slide=id.p
+- [BigQuery](https://cloud.google.com/bigquery/docs/introduction)
+- [Dremel](https://research.google/pubs/dremel-interactive-analysis-of-web-scale-datasets-2/)
+- [BigQuery Architecture by Panoply](https://panoply.io/data-warehouse-guide/bigquery-architecture/)
+- [BigQuery Architecture Presentation](https://docs.google.com/presentation/d/1a3ZoBAXFk8-EhUsd7rAZd-5p_HpltkzSeujjRGB2TAI/edit#slide=id.p)
