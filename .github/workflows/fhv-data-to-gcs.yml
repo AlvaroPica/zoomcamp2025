@@ -1,0 +1,65 @@
+name: FHV Data to GCS
+
+on:
+  workflow_dispatch:
+    inputs:
+      year_month:
+        description: 'Year and month (YYYY-MM)'
+        required: true
+        default: '2019-01'
+
+jobs:
+  transfer-fhv-data:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-cloud-storage requests
+
+      - name: Setup GCP Auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Download and Process FHV Data
+        run: |
+          YEAR_MONTH="${{ github.event.inputs.year_month }}"
+          URL="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/fhv_tripdata_${YEAR_MONTH}.csv.gz"
+          
+          echo "Downloading ${URL}..."
+          curl -L -o data.csv.gz ${URL}
+          
+          echo "Extracting file..."
+          gunzip data.csv.gz
+          mv data.csv "fhv_tripdata_${YEAR_MONTH}.csv"
+
+      - name: Upload to GCS
+        run: |
+          python -c '
+          from google.cloud import storage
+          
+          year_month = "${{ github.event.inputs.year_month }}"
+          bucket_name = "angular-rhythm-450212-n4-kestra-bucket"
+          source_file = f"fhv_tripdata_{year_month}.csv"
+          
+          storage_client = storage.Client()
+          bucket = storage_client.bucket(bucket_name)
+          blob = bucket.blob(f"fhv/{source_file}")
+          
+          blob.upload_from_filename(source_file)
+          print(f"File {source_file} uploaded to gs://{bucket_name}/fhv/")
+          ' 
