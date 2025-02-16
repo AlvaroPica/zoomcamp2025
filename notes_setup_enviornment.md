@@ -10,7 +10,7 @@ This notes are taken from video  [DE Zoomcamp 1.4.1 - Setting up the Environment
 
 Check [Create SSH Key](https://cloud.google.com/compute/docs/connect/create-ssh-keys)
 
-In Git Bash we run 
+In Git Bash we run
 
 `ssh-keygen -t rsa -f ~/.ssh/gcp -C pica_gcp`
 
@@ -54,7 +54,7 @@ Now you will be able to jump into the VM with just:
 
 Useful commands:
 
-- `less bashrc`: Check file that is executed everytime we log-in into the machine. 
+- `less bashrc`: Check file that is executed everytime we log-in into the machine.
 - `logout`: Logout from the machine and go back to terminal.
 - `source .bashrc`:  This will apply changes without the need to logout and login back.
 
@@ -124,7 +124,6 @@ poetry install
 
 `git clone https://github.com/DataTalksClub/data-engineering-zoomcamp.git`
 
-
 #### Configure VSCode to access Machine
 
 Use VSCode to work instead of on the laptop on the VM:
@@ -143,7 +142,7 @@ With any of them as we created the `~/.ssh/config` file we will see the host `de
 
 In Remote connections with VSCode not all the extensions are installed. Just some of them. To run Jupyter Notebooks from within VSCode you will need to install manual two extensions: Python and Jupyter.
 
-#### Configura ports 
+#### Configura ports
 
 In the VM we have a container running postgress in port 5432. To work locally with the postgres we need to configure ports.
 Go to Ports in VSCode and add 5432 and 8080.
@@ -186,3 +185,4 @@ Delete to destroy it
 #### Restart VM
 
 - When the VM is started we need to update the .ssh/config file with the new External IP
+

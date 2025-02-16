@@ -1,6 +1,6 @@
+# Kestra Notes
 
-
-# Check set up is OK.
+## Check set up is OK
 
 Data is coming from [Taxi Data in Github](https://github.com/DataTalksClub/nyc-tlc-data/releases)
 
@@ -8,16 +8,16 @@ Once you have run `docker compose up -d` in corresponding folder you can verify 
 
 In case docker-compose file was moved from one location to another you will need to map volumes to be able to access former flows or KV values stored in previous interactions with the container.
 
-1) Check Kestra container can see Posgres:
+### Check Kestra container can see Posgres
 
 - Jump into Kestra container: `docker exec -it 612e68257987 bash` (From Git Bash you might need to use `winpty docker exec -it 612e68257987 bash`)
 - Install postgres in the container `apt update && apt install -y postgresql-client`
 - Connect to the Database in the other container: `psql -h postgres -U kestra -d kestra`
 - Check tables with `\dt` and run a `select 1` query check.
+  
+#### Check you can access the database in your laptop
 
-2) Check you can access the database in your laptop
-
-- From any SQL client create a connection: 
+- From any SQL client create a connection
   - Host: localhost
   - Database: kestra
   - user: kestra
@@ -25,55 +25,52 @@ In case docker-compose file was moved from one location to another you will need
 
 **Important**: Understand that from local machine we use `host=localhost` but from the kestra container we must use the name of the container managing the database (in this case `postgres`)
 
-3) Run an easy Flow in Kestra to create a table in the database:
+#### Run an easy Flow in Kestra to create a table in the database
 
-This is the test job you can use:
+  This is the test job you can use:
 
-```bash
-id: test_sql_database
-namespace: zoomcamp
+  ```bash
+  id: test_sql_database
+  namespace: zoomcamp
 
-tasks:
-  - id: hello
-    type: io.kestra.plugin.core.log.Log
-    message: Hello World! 🚀
+  tasks:
+    - id: hello
+      type: io.kestra.plugin.core.log.Log
+      message: Hello World! 🚀
 
-  - id: green_create_staging_table
-    type: io.kestra.plugin.jdbc.postgresql.Queries
-    sql: |
-      CREATE TABLE IF NOT EXISTS public.test_manolito (
-          foo          text,
-          bar               text,
-      );
+    - id: green_create_staging_table
+      type: io.kestra.plugin.jdbc.postgresql.Queries
+      sql: |
+        CREATE TABLE IF NOT EXISTS public.test_manolito (
+            foo          text,
+            bar               text,
+        );
 
-pluginDefaults:
-  - type: io.kestra.plugin.jdbc.postgresql
-    values:
-      #url: jdbc:postgresql://host.docker.internal:5432/postgres-zoomcamp
-      url: jdbc:postgresql://postgres:5432/kestra
-      username: kestra
-      password: k3str4
-```
+  pluginDefaults:
+    - type: io.kestra.plugin.jdbc.postgresql
+      values:
+        #url: jdbc:postgresql://host.docker.internal:5432/postgres-zoomcamp
+        url: jdbc:postgresql://postgres:5432/kestra
+        username: kestra
+        password: k3str4
+  ```
 
 We had to change the host from `host.docker.internal` for the reason commented in point (1)
 
-4) From the host machine SQL cliente check visually that the table `test_manolito` have been created and rop it manually.
+From the host machine SQL client check visually that the table `test_manolito` have been created and rop it manually.
 
 ## Render variable expressions
 
 When doing recursive expression, that is calling a string that has an expression in it, you need to explicitily tell it to render it too.
 
 `staging_table: "public.{{inputs.taxi}}_tripdata_staging"`
- 
  `CREATE TABLE IF NOT EXISTS {{render(vars.staging_table)}}`
 
 If we do not use the render() function we would recieve the string as we see it right know, without the dynamic value inside, leading to a fail.
 
 ## Plug-in Defaults
 
-Allows to set 
-
-
+Allows to set default values for a plugin.
 
 ## Adding a Unique line ID
 
@@ -109,7 +106,7 @@ unique_row_id = md5(
     )
 ```
 
-This examples 
+This examples shows how to handle NULLs in the columns.
 
 ## Conditionals
 
@@ -195,8 +192,6 @@ In Execution labels we can write *Backfill* to be able to differentiate between 
 
 ### Schedules
 
-
-
 ## Other considerations
 
 When working with monthly data we first load to staging and then merge to production table.
@@ -239,7 +234,6 @@ Parameters:
 - dataset:  "{{kv('GCP_DATASET')}}"
 
 To create the dataset and the bucket we can use the Terraform we studied last lesson or use a dedicated kestra flow for that purpose in `05_gcp_setup.yaml` that will create the resources accoding to the KV we have just created.
-
 
 ### Adding data strategy
 
