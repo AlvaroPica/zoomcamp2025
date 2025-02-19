@@ -1,6 +1,8 @@
-# Solution Homework 3
+# Previous cohorts
 
-## Question 1
+## Cohort 2024
+
+### Question 1 Previous cohorts
 
 The condition added to the stg models related to the filter on variable `is_test_run` has the following effect:
 
@@ -8,11 +10,11 @@ The condition added to the stg models related to the filter on variable `is_test
 - If `is_test_run` is set to `false`, then the full dataset is processed.
 - If not specified, the default value is `true` and the number of rows processed is 100.
 
-## Question 2
+### Question 2 Previous cohorts
 
 The CI will run with...
 
-## Question 3
+### Question 3 Previous cohorts 
 
 First we have run a Kestra Flow to download the data from the source and load it into BigQuery.
 
@@ -29,6 +31,6 @@ From this point we have followed the instructions given in the homework to build
 
 The final model has a total of **22,998,722** records.
 
-## Question 4
+### Question 4 Previous cohorts
 
 To do
