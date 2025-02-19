@@ -1,5 +1,5 @@
 {{ config(
-    schema=resolve_schema_for(model_type='core'), 
+    materialized='table'
 ) }}
 
 {% set simnulated_current_date = '2020-01-01' %}
