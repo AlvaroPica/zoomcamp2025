@@ -132,4 +132,37 @@ order by service_type, year, month
 
 ### Question 7
 
+Staging model: [stg_fhv_tripdata.sql](../taxi_rides_ny/models/staging/stg_fhv_tripdata.sql)
+
+Core model: [fct_fhv_monthly_zone_traveltime_p90.sql](../taxi_rides_ny/models/core/fct_fhv_monthly_zone_traveltime_p90.sql)
+
+Query:
+
+```sql
+with ranked_trips as (
+    select
+        *,
+        row_number() over (partition by year, month, pickup_zone order by p90_trip_duration desc) as rn
+    from `angular-rhythm-450212-n4.zoomcamp_dbt_core_prod.fct_fhv_monthly_zone_traveltime_p90`
+    where 
+        year = 2019 
+        and month = 11
+        and pickup_zone in ('Newark Airport', 'SoHo', 'Yorkville East')
+)
+select 
+  *
+from ranked_trips
+where rn = 2;
+
+```
+
+![Solution question 7](question_7.png)
+
+- [x] East Village, Chinatown, Garment District
+- [ ] East Village, Park Slope, Clinton East
+- [ ] East Village, Saint Albans, Howard Beach
+- [ ] East Village, Rosedale, Bath Beach
+- [ ] East Village, Yorkville East, Greenpoint
+
+The results for `Newwak Airport` is actually `LaGuardia Airport` but there is no matching option and the ones for `SoHo` and `Yorkville East` are correct.
 
