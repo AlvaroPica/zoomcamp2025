@@ -109,3 +109,27 @@ order by service_type, yoy_growth desc
 - [ ] green: {best: 2020/Q1, worst: 2020/Q2}, yellow: {best: 2020/Q3, worst: 2020/Q4}
 
 ### Question 6
+
+Model: [fct_taxi_trips_monthly_fare_p95.sql](../taxi_rides_ny/models/core/fct_taxi_trips_monthly_fare_p95.sql)
+
+Query:
+
+```sql
+select
+*
+from `angular-rhythm-450212-n4.zoomcamp_dbt_core_prod.fct_taxi_trips_monthly_fare_p95`
+where year = 2020 and month = 4
+order by service_type, year, month
+```
+
+![Solution question 6](question_6.png)
+
+- [ ] green: {p97: 55.0, p95: 45.0, p90: 26.5}, yellow: {p97: 52.0, p95: 37.0, p90: 25.5}
+- [x] green: {p97: 55.0, p95: 45.0, p90: 26.5}, yellow: {p97: 31.5, p95: 25.5, p90: 19.0}
+- [ ] green: {p97: 40.0, p95: 33.0, p90: 24.5}, yellow: {p97: 52.0, p95: 37.0, p90: 25.5}
+- [ ] green: {p97: 40.0, p95: 33.0, p90: 24.5}, yellow: {p97: 31.5, p95: 25.5, p90: 19.0}
+- [ ] green: {p97: 55.0, p95: 45.0, p90: 26.5}, yellow: {p97: 52.0, p95: 25.5, p90: 19.0}
+
+### Question 7
+
+
