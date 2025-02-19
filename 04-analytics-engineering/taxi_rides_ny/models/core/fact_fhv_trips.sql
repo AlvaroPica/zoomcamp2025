@@ -19,6 +19,8 @@ select
     fhv_tripdata.tripid, 
     fhv_tripdata.dispatching_base_num, 
     fhv_tripdata.pickup_datetime, 
+    extract(year from fhv_tripdata.pickup_datetime) as year,
+    extract(month from fhv_tripdata.pickup_datetime) as month,
     fhv_tripdata.dropoff_datetime,
     fhv_tripdata.pickup_locationid, 
     pickup_zone.borough as pickup_borough, 

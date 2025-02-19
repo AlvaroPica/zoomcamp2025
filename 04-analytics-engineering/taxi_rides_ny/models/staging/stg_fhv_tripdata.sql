@@ -17,9 +17,11 @@ select
     {{ dbt.safe_cast("Affiliated_base_number", api.Column.translate_type("string")) }} as Affiliated_base_number,
 
 from tripdata
-where extract(year from cast(pickup_datetime as timestamp)) = 2019
 
--- dbt build --select <model.sql> --vars '{'is_test_run: false}'
+where dispatching_base_num is not null
+
+
+-- dbt build --select <model.sql> --vars '{"is_test_run": false}'
 {% if var('is_test_run', default=true) %}
 
   limit 100
