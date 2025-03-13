@@ -4,6 +4,9 @@
 
 Format json files:
 
+Open Command Palette: Ctrl+Shift+P
+
+
 From command palette:
 
 ```bash
