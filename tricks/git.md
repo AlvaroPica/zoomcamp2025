@@ -1,10 +1,16 @@
 # Git tricks
 
+Create key:
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
 - Check remote url:
 
 ```bash
 git remote -v
 ```
+
 
 Check SSH agent is working properly:
 
